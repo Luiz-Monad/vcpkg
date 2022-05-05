@@ -139,6 +139,18 @@ function(vcpkg_cmake_configure)
         debug_message("manually specified variables: ${manually_specified_variables}")
     endif()
 
+    ###############
+    # PMAKE PATCH #
+    ###############
+    include(${TARGET_TRIPLET_FILE})
+    if(DEFINED TARGET_CMAKE_GENERATOR)
+        set(arg_GENERATOR ${TARGET_CMAKE_GENERATOR})
+    endif()
+    if(DEFINED TARGET_CMAKE_OPTIONS)
+        list(APPEND arg_OPTIONS ${TARGET_CMAKE_OPTIONS})
+    endif()
+    ###############
+
     if(CMAKE_HOST_WIN32)
         if(DEFINED ENV{PROCESSOR_ARCHITEW6432})
             set(host_architecture "$ENV{PROCESSOR_ARCHITEW6432}")

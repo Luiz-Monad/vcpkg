@@ -1,0 +1,18 @@
+{
+  "name": "tensorflow-meta",
+  "version-string": "0.0.1",
+  "description": "CMAKE TensorFlow-Meta Package",
+  "dependencies": [
+    {
+      "name": "vcpkg-cmake",
+      "host": true
+    },
+    {
+      "name": "vcpkg-cmake-config",
+      "host": true
+    },
+    "pmake-cmake-targets",
+    "pmake-cmake-dashboard",
+    "tensorflow-cc"
+  ]
+}

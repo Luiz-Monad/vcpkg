@@ -13,15 +13,14 @@ vcpkg_extract_source_archive_ex(
 
 file(COPY "${CMAKE_CURRENT_LIST_DIR}/CMakeLists.txt" DESTINATION "${SOURCE_PATH}")
 
-vcpkg_configure_cmake(
+vcpkg_cmake_configure(
     SOURCE_PATH ${SOURCE_PATH}
-    PREFER_NINJA
     OPTIONS_DEBUG
         -DBZIP2_SKIP_HEADERS=ON
         -DBZIP2_SKIP_TOOLS=ON
 )
 
-vcpkg_install_cmake()
+vcpkg_cmake_install()
 vcpkg_copy_pdbs()
 
 file(READ "${CURRENT_PACKAGES_DIR}/include/bzlib.h" BZLIB_H)

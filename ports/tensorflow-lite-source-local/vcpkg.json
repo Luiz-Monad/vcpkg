@@ -1,0 +1,23 @@
+{
+  "name": "tensorflow-lite-local",
+  "version-string": "2.4.0",
+  "homepage": "https://github.com/mozilla/tensorflow.git",
+  "description": "Computation using data flow graphs for scalable machine learning ",
+  "dependencies": [
+    {
+      "host": true,
+      "name": "pmake-vcpkg-local"
+    },
+    {
+      "name": "vcpkg-cmake",
+      "host": true
+    },
+    {
+      "name": "vcpkg-cmake-config",
+      "host": true
+    },
+    "pmake-cmake-targets",
+    "pmake-cmake-dashboard",
+    "zlib"
+  ]
+}

@@ -20,9 +20,8 @@ vcpkg_extract_source_archive_ex(
 # This is generated during the cmake build
 file(REMOVE ${SOURCE_PATH}/zconf.h)
 
-vcpkg_configure_cmake(
+vcpkg_cmake_configure(
     SOURCE_PATH ${SOURCE_PATH}
-    PREFER_NINJA
     OPTIONS
         -DSKIP_INSTALL_FILES=ON
         -DSKIP_BUILD_EXAMPLES=ON
@@ -30,7 +29,7 @@ vcpkg_configure_cmake(
         -DSKIP_INSTALL_HEADERS=ON
 )
 
-vcpkg_install_cmake()
+vcpkg_cmake_install()
 file(INSTALL ${CMAKE_CURRENT_LIST_DIR}/vcpkg-cmake-wrapper.cmake DESTINATION ${CURRENT_PACKAGES_DIR}/share/${PORT})
 
 # Install the pkgconfig file

@@ -26,12 +26,15 @@ file(
   RENAME copyright
 )
 
-# pc layout from cygwin (consumed in xserver!)
-file(WRITE "${CURRENT_PACKAGES_DIR}/share/pkgconfig/khronos-opengl-registry.pc" [=[
-prefix=${pcfiledir}/../..
-datadir=${prefix}/share
-specdir=${datadir}/opengl
-Name: khronos-opengl-registry
-Description: Khronos OpenGL registry
-Version: git4594c03239fb76580bc5d5a13acb2a8f563f0158
-]=])
+file(COPY ${CMAKE_CURRENT_LIST_DIR}/CMakeLists.txt DESTINATION ${SOURCE_PATH})
+
+vcpkg_cmake_configure(
+    SOURCE_PATH ${SOURCE_PATH}
+)
+
+vcpkg_cmake_install()
+
+vcpkg_cmake_config_fixup()
+
+file(REMOVE_RECURSE ${CURRENT_PACKAGES_DIR}/debug)
+

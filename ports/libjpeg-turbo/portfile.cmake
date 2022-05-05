@@ -10,7 +10,7 @@ vcpkg_from_github(
     HEAD_REF master
     PATCHES
         add-options-for-exes-docs-headers.patch
-        # workaround for vcpkg bug see #5697 on github for more information
+        #workaround for vcpkg bug see #5697 on github for more information
         workaround_cmake_system_processor.patch
 )
 
@@ -32,9 +32,8 @@ string(COMPARE EQUAL "${VCPKG_LIBRARY_LINKAGE}" "static" ENABLE_STATIC)
 string(COMPARE EQUAL "${VCPKG_CRT_LINKAGE}" "dynamic" WITH_CRT_DLL)
 
 vcpkg_check_features(OUT_FEATURE_OPTIONS FEATURE_OPTIONS
-    FEATURES
-        jpeg7 WITH_JPEG7
-        jpeg8 WITH_JPEG8
+    jpeg7 WITH_JPEG7
+    jpeg8 WITH_JPEG8
 )
 
 vcpkg_cmake_configure(
@@ -66,8 +65,8 @@ if(VCPKG_LIBRARY_LINKAGE STREQUAL "static")
         file(RENAME "${CURRENT_PACKAGES_DIR}/lib/turbojpeg-static.lib" "${CURRENT_PACKAGES_DIR}/lib/turbojpeg.lib")
     endif()
     if(EXISTS "${CURRENT_PACKAGES_DIR}/debug/lib/jpeg-static.lib")
-        file(RENAME "${CURRENT_PACKAGES_DIR}/debug/lib/jpeg-static.lib" "${CURRENT_PACKAGES_DIR}/debug/lib/jpeg.lib")
-        file(RENAME "${CURRENT_PACKAGES_DIR}/debug/lib/turbojpeg-static.lib" "${CURRENT_PACKAGES_DIR}/debug/lib/turbojpeg.lib")
+        file(RENAME "${CURRENT_PACKAGES_DIR}/debug/lib/jpeg-static.lib" "${CURRENT_PACKAGES_DIR}/debug/lib/jpegd.lib")
+        file(RENAME "${CURRENT_PACKAGES_DIR}/debug/lib/turbojpeg-static.lib" "${CURRENT_PACKAGES_DIR}/debug/lib/turbojpegd.lib")
     endif()
     
     file(REMOVE_RECURSE "${CURRENT_PACKAGES_DIR}/bin" "${CURRENT_PACKAGES_DIR}/debug/bin")
@@ -90,6 +89,12 @@ file(REMOVE_RECURSE
      "${CURRENT_PACKAGES_DIR}/debug/share"
      "${CURRENT_PACKAGES_DIR}/debug/include"
      "${CURRENT_PACKAGES_DIR}/share/man")
+set(_file "${CURRENT_PACKAGES_DIR}/debug/lib/pkgconfig/libjpeg.pc")
+if(EXISTS "${_file}" AND VCPKG_TARGET_IS_WINDOWS)
+    vcpkg_replace_string("${_file}" "-ljpeg" "-ljpegd")
+endif() 
+
+vcpkg_fixup_pkgconfig()
 
 file(COPY "${CMAKE_CURRENT_LIST_DIR}/usage" DESTINATION "${CURRENT_PACKAGES_DIR}/share/${PORT}")
 file(COPY "${CMAKE_CURRENT_LIST_DIR}/vcpkg-cmake-wrapper.cmake" DESTINATION "${CURRENT_PACKAGES_DIR}/share/jpeg")
